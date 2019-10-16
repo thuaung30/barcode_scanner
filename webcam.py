@@ -7,7 +7,10 @@ from oauth2client.service_account import ServiceAccountCredentials
 import urllib.request as req
 from urllib.error import URLError
 import time
-from playsound import playsound
+from pydub import AudioSegment
+from pydub.playback import play
+
+song = AudioSegment.from_mp3('i-demand-attention.mp3')
 
 workbook = Workbook()
 ws = workbook.active
@@ -53,7 +56,7 @@ if interneton() == True:
             sheet.update_cell( 1, 1, strippedData)
             ws['A1'] = strippedData
             workbook.save("sample.xlsx")
-            playsound('i-demand-attention.mp3')
+            play(song)
             time.sleep(5)
             strippedData = " "
         key = cv2.waitKey(1)
@@ -72,7 +75,7 @@ else:
         if strippedData != " ":
             ws['A1'] = strippedData
             workbook.save("sample.xlsx")
-            playsound('i-demand-attention.mp3')
+            play(song)
             time.sleep(5)
             strippedData = " "
         key = cv2.waitKey(1)
