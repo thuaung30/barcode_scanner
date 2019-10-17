@@ -13,6 +13,8 @@ sheet.update_cell(10, 1, 'Count')
 sheet.update_cell(11, 1, 'DateTime')
 for column in range(2,11):
     sheet.update_cell(10, column, '0')
+    sheet.update_cell(11, column, '0')
+
 for column in range(2,11):
     x1 = x-(column-1)
     if x1 < 0:

@@ -18,10 +18,11 @@ ws.append(header)
 
 
 for column in range(1,11):
-    ws.column_dimensions[chr(64+column)].width = len(header[column-1])+2
+    ws.column_dimensions[chr(64+column)].width = len(header[column-1])+20
 
 for column in range(2,11):
     ws['{}10'.format(chr(64+column))] = '0'
+    ws['{}11'.format(chr(64+column))] = '0'
 
 wb1 = load_workbook(filename='attendanceCheck.xlsx', read_only=True)
 ws1 = wb1.worksheets[0]
