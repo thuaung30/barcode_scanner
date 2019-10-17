@@ -59,12 +59,12 @@ while True:
     if strippedData != " ": 
         for cell in readWorkSheet[1]:
             if strippedData == cell.value:
+                column = cell.column
+                columnLetter = chr(64+column)
+                count = readWorkSheet['{}10'.format(columnLetter)].value
                 a = time.time()
-                if a > int(timer_dict[strippedData])+30: 
+                if a > int(timer_dict[strippedData])+43200 and int(count) < 8: 
                     timer_dict[strippedData] = time.time()
-                    column = cell.column
-                    columnLetter = chr(64+column)
-                    count = readWorkSheet['{}10'.format(columnLetter)].value
                     count1 = str(int(count)+1)
                     readWorkSheet['{}10'.format(columnLetter)] = count1
                     readWorkSheet['{}{}'.format(columnLetter, int(count1)+1)] = 'Present'
