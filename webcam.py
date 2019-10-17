@@ -16,10 +16,9 @@ song = AudioSegment.from_mp3('i-demand-attention.mp3')
 flag = False
 
 
-# workbook = Workbook()
-# ws = workbook.active
 readWorkBook = load_workbook('attendanceCheck.xlsx')
 readWorkSheet = readWorkBook.worksheets[0]
+
 
 timer = []
 dateTime = []
@@ -32,6 +31,7 @@ for cell in readWorkSheet[11]:
 timer_dict = {}
 for i in range(0,9):
     timer_dict[timer[i]] = dateTime[i]
+
 
 # for k,v in timer_dict.items():
 #     print(k, v)
