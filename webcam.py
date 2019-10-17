@@ -14,7 +14,7 @@ from pydub.playback import play
 
 song = AudioSegment.from_mp3('i-demand-attention.mp3')
 flag = False
-
+state = True
 
 readWorkBook = load_workbook('attendanceCheck.xlsx')
 readWorkSheet = readWorkBook.worksheets[0]
@@ -35,6 +35,11 @@ for i in range(0,9):
 
 # for k,v in timer_dict.items():
 #     print(k, v)
+
+
+# def flush(col):
+#     for i in range(2,10):
+#         readWorkSheet['{}{}'.format(col, i)] = None
 
 
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
@@ -63,6 +68,7 @@ while True:
                 columnLetter = chr(64+column)
                 count = readWorkSheet['{}10'.format(columnLetter)].value
                 a = time.time()
+                
                 if a > int(timer_dict[strippedData])+43200 and int(count) < 8: 
                     timer_dict[strippedData] = time.time()
                     count1 = str(int(count)+1)
@@ -84,5 +90,8 @@ while True:
         readWorkBook.save("attendanceCheck.xlsx")
         strippedData = " "
     key = cv2.waitKey(1)
+    toggle = cv2.waitKey(33)
     if key == 27:
         break
+    # if toggle == ord('a'):
+    #     state = not state
