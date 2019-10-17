@@ -5,15 +5,17 @@ from openpyxl import Workbook
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import httplib2
-# from httplib2.error import ServerNotFoundError
 import time
 from pydub import AudioSegment
 from pydub.playback import play
 
+
 song = AudioSegment.from_mp3('i-demand-attention.mp3')
+
 
 workbook = Workbook()
 ws = workbook.active
+
 
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 creds = ServiceAccountCredentials.from_json_keyfile_name('barcodeID-spreadsheet.json', scope)
@@ -22,14 +24,8 @@ creds = ServiceAccountCredentials.from_json_keyfile_name('barcodeID-spreadsheet.
 cap = cv2.VideoCapture(1)
 font = cv2.FONT_HERSHEY_PLAIN
 
-strippedData = " "
 
-# def interneton():
-#     try:
-#         req.urlopen('https://www.google.com', timeout=1)
-#         return True
-#     except URLError:
-#         return False
+strippedData = " "
         
 
 while True:
@@ -55,8 +51,3 @@ while True:
     key = cv2.waitKey(1)
     if key == 27:
         break
-
-
-
-
-
