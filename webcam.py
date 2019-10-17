@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import pyzbar.pyzbar as pyzbar
 from openpyxl import Workbook
+from openpyxl import load_workbook
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import httplib2
@@ -13,8 +14,10 @@ from pydub.playback import play
 song = AudioSegment.from_mp3('i-demand-attention.mp3')
 
 
-workbook = Workbook()
-ws = workbook.active
+# workbook = Workbook()
+# ws = workbook.active
+readWorkBook = load_workbook('attendanceCheck.xlsx')
+readWorkSheet = readWorkBook.worksheets[0]
 
 
 scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
@@ -34,17 +37,27 @@ while True:
     decodedObjects = pyzbar.decode(frame)
     for obj in decodedObjects:
         strippedData = str(obj.data).strip("b''")
-        cv2.putText(fframe, strippedData, (50, 50), font, 2, (255, 0, 0), 3)
+        #cv2.putText(fframe, strippedData, (50, 50), font, 2, (255, 0, 0), 3)
     cv2.imshow("Frame", fframe)
     if strippedData != " ": 
+        for cell in readWorkSheet[1]:
+            if strippedData == cell.value:
+                column = cell.column
+                columnLetter = chr(64+column)
+                count = readWorkSheet['{}10'.format(columnLetter)].value
+                count1 = str(int(count)+1)
+                readWorkSheet['{}10'.format(columnLetter)] = count1
+                readWorkSheet['{}{}'.format(columnLetter, int(count1)+1)] = 'Present'
         try:
             client = gspread.authorize(creds)
             sheet = client.open('barcodeID spreadsheet').sheet1
-            sheet.update_cell( 1, 1, strippedData)
-        except httplib2.ServerNotFoundError:
+            # sheet.update_cell( 1, 1, strippedData)
+            sheet.update_cell(int(count1)+1, column, 'Present')
+            sheet.update_cell(10, column, count1)
+        except (httplib2.ServerNotFoundError, ConnectionError):
             pass
-        ws['A1'] = strippedData
-        workbook.save("sample.xlsx")
+        # ws['A1'] = strippedData
+        readWorkBook.save("attendanceCheck.xlsx")
         play(song)
         time.sleep(2)
         strippedData = " "
