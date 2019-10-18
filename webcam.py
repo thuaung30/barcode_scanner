@@ -1,4 +1,3 @@
-import cv2
 import numpy as np
 import pyzbar.pyzbar as pyzbar
 from openpyxl import Workbook
@@ -10,6 +9,7 @@ import time
 import datetime
 from pydub import AudioSegment
 from pydub.playback import play
+import cv2
 
 
 song = AudioSegment.from_mp3('i-demand-attention.mp3')
@@ -93,5 +93,3 @@ while True:
     toggle = cv2.waitKey(33)
     if key == 27:
         break
-    # if toggle == ord('a'):
-    #     state = not state
