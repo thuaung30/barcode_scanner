@@ -28,8 +28,8 @@ def coder(a):
         return '11900{}42198{}'.format(a, b)
 
 
-def flush(identity):
-    # identity = int(input('Enter student ID.\n'))
+def flush():
+    identity = int(input('Enter student ID.\n'))
     barCode = coder(identity)
     for cell in readWorkSheet[1]:
         if cell.value == barCode:
@@ -44,5 +44,4 @@ def flush(identity):
     readWorkBook.save("attendanceCheck.xlsx")
         
 
-for i in range(1,10):    
-    flush(i)
+flush()
