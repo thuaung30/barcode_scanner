@@ -29,7 +29,7 @@ for cell in readWorkSheet[11]:
     if cell.value != 'DateTime':
         dateTime.append(datetime.datetime.strptime(str(cell.value), '%a %b %d %H:%M:%S %Y').timestamp())
 timer_dict = {}
-for i in range(0,9):
+for i in range(0,5):
     timer_dict[timer[i]] = dateTime[i]
 
 
