@@ -26,8 +26,8 @@ timer = []
 dateTime = []
 for cell in readWorkSheet[1]:
     if cell.value != 'BarCodeID':
-        timer.append(cell.value)
-for cell in readWorkSheet[11]:
+        timer.append(str(cell.value))
+for cell in readWorkSheet[27]:
     if cell.value != 'DateTime':
         dateTime.append(datetime.datetime.strptime(str(cell.value), '%a %b %d %H:%M:%S %Y').timestamp())
 timer_dict = {}
@@ -44,8 +44,8 @@ for i in range(0,5):
 #         readWorkSheet['{}{}'.format(col, i)] = None
 
 
-scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('barcodeID-spreadsheet.json', scope)
+# scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+# creds = ServiceAccountCredentials.from_json_keyfile_name('barcodeID-spreadsheet.json', scope)
 
 def detect(image, threshold, morpth_matrix_size, blur_matrix):
     gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -141,27 +141,27 @@ while True:
                         if strippedData == cell.value:
                             column = cell.column
                             columnLetter = chr(64+column)
-                            count = readWorkSheet['{}10'.format(columnLetter)].value
+                            count = readWorkSheet['{}26'.format(columnLetter)].value
                             a = time.time()
-                            
-                            if a > int(timer_dict[strippedData])+10 and int(count) < 8: 
+
+                            if a > int(timer_dict[strippedData])+10 and int(count) < 24: 
                                 timer_dict[strippedData] = time.time()
                                 count1 = str(int(count)+1)
-                                readWorkSheet['{}10'.format(columnLetter)] = count1
+                                readWorkSheet['{}26'.format(columnLetter)] = count1
                                 readWorkSheet['{}{}'.format(columnLetter, int(count1)+1)] = 'Present'
-                                readWorkSheet['{}11'.format(columnLetter)] = time.ctime(timer_dict[strippedData])
+                                readWorkSheet['{}27'.format(columnLetter)] = time.ctime(timer_dict[strippedData])
                                 play(song)
-                                flag = True
-                    if flag == True:
-                        try:
-                            client = gspread.authorize(creds)
-                            sheet = client.open('barcodeID spreadsheet').sheet1
-                            sheet.update_cell(int(count1)+1, column, 'Present')
-                            sheet.update_cell(10, column, count1)
-                            sheet.update_cell(11, column, time.ctime(timer_dict[strippedData]))
-                        except (httplib2.ServerNotFoundError, ConnectionError):
-                            pass
-                    flag = False
+                                # flag = True
+                    # if flag == True:
+                    #     try:
+                    #         client = gspread.authorize(creds)
+                    #         sheet = client.open('barcodeID spreadsheet').sheet1
+                    #         sheet.update_cell(int(count1)+1, column, 'Present')
+                    #         sheet.update_cell(10, column, count1)
+                    #         sheet.update_cell(11, column, time.ctime(timer_dict[strippedData]))
+                    #     except (httplib2.ServerNotFoundError, ConnectionError):
+                    #         pass
+                    # flag = False
                     readWorkBook.save("attendanceCheck.xlsx")
                     strippedData = " "
             cv2.imshow("Capturing barcodes",cropped_barcode)

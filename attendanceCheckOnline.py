@@ -9,15 +9,15 @@ sheet = client.open('barcodeID spreadsheet').sheet1
 x = 7
 
 sheet.update_cell( 1, 1, 'BarCodeID')
-sheet.update_cell(10, 1, 'Count')
-sheet.update_cell(11, 1, 'DateTime')
-for column in range(2,9):
+sheet.update_cell(26, 1, 'Count')
+sheet.update_cell(27, 1, 'DateTime')
+for column in range(2,7):
     sheet.update_cell(1, column, ' ')
-    sheet.update_cell(10, column, '0')
-    sheet.update_cell(11, column, '0')
+    sheet.update_cell(26, column, '0')
+    sheet.update_cell(27, column, '0')
 
 for column in range(2,7):
     sheet.update_cell( 1, column, '191100{}'.format(column-1))
 
-for row in range(2,10):
+for row in range(2,26):
     sheet.update_cell(row, 1, 'Day{}'.format(row-1))
