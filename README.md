@@ -11,3 +11,6 @@ Python scripts for scanning barcodes and storing them in local and google sheets
 
 # Author
 - [jasonIV](https://github.com/jasonIV)
+
+# License
+- [MIT License](./LICENSE)
