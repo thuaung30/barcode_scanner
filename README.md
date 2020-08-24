@@ -9,5 +9,5 @@ Python scripts for scanning barcodes and storing them in local and google sheets
 
 > pip3 install -r requirements.txt
 
-#Author
+# Author
 - [jasonIV](https://github.com/jasonIV)
